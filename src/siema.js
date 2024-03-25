@@ -210,12 +210,28 @@ export default class Siema {
     return elementContainer;
   }
 
+    calculateSlidesInSpace(
+        reviewItemsWidth
+        )
+    {
+        let slideWidth = 260;
+        let spacingBetweenSlides = 12;
+        let totalWidthPerSlide = slideWidth + spacingBetweenSlides;
+    
+        let slidesCount = reviewItemsWidth / totalWidthPerSlide;
+
+        return slidesCount;
+    }
 
   /**
    * Determinates slides number accordingly to clients viewport.
    */
   resolveSlidesNumber() {
-    if (typeof this.config.perPage === 'number') {
+    if ( this.config.perPage === 'auto' )
+    {
+      this.perPage = this.calculateSlidesInSpace( this.selector.offsetWidth );
+    }
+    else if (typeof this.config.perPage === 'number') {
       this.perPage = this.config.perPage;
     }
     else if (typeof this.config.perPage === 'object') {
